@@ -62,7 +62,10 @@ router.get('/count', function (req, res) {
 
 
 router.get("/compare", function (req, res) {
-  const { scale, type } = req.query
+  let { scale, type } = req.query
+  if(scale === undefined) {
+    scale = 'd'
+  }
   const items = new Map([
     ['d', {
       count: 24,
