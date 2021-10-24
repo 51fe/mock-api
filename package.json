@@ -1,0 +1,15 @@
+{
+  "name": "sample",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "debug": "^2.6.9",
+    "express": "^4.17.1",
+    "mockjs": "^1.1.0",
+    "morgan": "^1.10.0"
+  }
+}

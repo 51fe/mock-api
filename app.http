@@ -1,0 +1,8 @@
+###
+GET http://localhost:3000/api/report/count?startTime=20210125&endTime=20210131
+Accept: application/json
+
+###
+GET http://localhost:3000/api/report/compare?scale=d
+Accept: application/json
+
