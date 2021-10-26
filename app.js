@@ -1,9 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const reportRouter = require('./routes/report');
+const articleRouter = require('./routes/article');
 
 const app = express();
 
@@ -12,20 +14,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(cors());
+
 // router
 app.use('/', indexRouter);
 app.use('/api/report', reportRouter);
-
-// CORS config
-app.all('/*', function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*'); // restrict it to the required domain
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
-  if (req.method == 'OPTIONS') {
-    res.status(200).end();
-  } else {
-    next();
-  }
-});
-
+app.use('/api/article', articleRouter);
 module.exports = app;

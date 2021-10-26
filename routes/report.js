@@ -1,7 +1,6 @@
 const express = require('express')
 const Mock = require('mockjs')
-const { parseDate } = require("../utils")
-const { formatDate, groupCount } = require("../utils")
+const { parseDate, formatDate, groupCount } = require("../utils")
 const router = express.Router()
 
 function getList(start, end) {
@@ -11,7 +10,7 @@ function getList(start, end) {
     const total = '@integer(120, 150)'
     const carrierTotal = '@integer(40, 50)'
     list.push(Mock.mock({
-      reportDate: formatDate(end + 1000 * 24 * 3600 * i, '{m}.{d}', false),
+      reportDate: formatDate(end + 1000 * 24 * 3600 * i, '{m}/{d}', false),
       total,
       success: '@integer(120, @total)',
       carrierRateList: [{
@@ -51,7 +50,7 @@ router.get('/count', function (req, res) {
       code: 200,
       data: {
         carrierRateList,
-        list
+        items: list
       },
       msg: 'success'
     })
@@ -63,10 +62,11 @@ router.get('/count', function (req, res) {
 
 router.get("/compare", function (req, res) {
   let { scale, type } = req.query
-  if(scale === undefined) {
-    scale = 'd'
+  if (scale) {
+    res.status(400).json({ message: '缺少必要的参数' })
+    return;
   }
-  const items = new Map([
+  const scales = new Map([
     ['d', {
       count: 24,
       h: 1
@@ -82,7 +82,7 @@ router.get("/compare", function (req, res) {
   ])
   const list = []
   const startDate = new Date(2021, 8, 1, 0, 0, 0);
-  const { count, h } = items.get(scale)
+  const { count, h } = scales.get(scale)
   const half = Math.round(count / 2)
   const isMultiple = type !== 'single'
   for (let i = 0; i < count; i++) {
@@ -102,7 +102,8 @@ router.get("/compare", function (req, res) {
   res.json({
     code: 200,
     data: {
-      data: list
+      items: list,
+      totle: list.length
     },
     msg: "success"
   })

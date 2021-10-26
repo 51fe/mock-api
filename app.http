@@ -6,3 +6,15 @@ Accept: application/json
 GET http://localhost:3000/api/report/compare?scale=d
 Accept: application/json
 
+###
+GET http://localhost:3000/api/article/list?page=1&limit=20
+Accept: application/json
+
+
+###
+POST http://localhost:3000/api/article/create
+Accept: application/json
+
+###
+POST http://localhost:3000/api/article/update
+Accept: application/json
