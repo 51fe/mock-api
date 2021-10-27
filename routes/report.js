@@ -62,7 +62,7 @@ router.get('/count', function (req, res) {
 
 router.get("/compare", function (req, res) {
   let { scale, type } = req.query
-  if (scale) {
+  if (!scale) {
     res.status(400).json({ message: '缺少必要的参数' })
     return;
   }
